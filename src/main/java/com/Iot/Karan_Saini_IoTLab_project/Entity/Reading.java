@@ -1,5 +1,9 @@
 package com.Iot.Karan_Saini_IoTLab_project.Entity;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -17,7 +22,7 @@ public class Reading {
 	private String vin;
 	private long lattitude;
 	private long longitude;
-	private String timeStamp;
+	private Timestamp timestamp;
 	private float fuelVolume;
 	private int speed;
 	private int engineHp;
@@ -26,22 +31,28 @@ public class Reading {
 	private boolean cruiseControlOn;
 	private long engineRpm;
 
-	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "tires_id")
 	private Tires tires;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "alert_id")
+	private List<Alert> alerts = new ArrayList<>();
 
 	public Reading() {
 		super();
 
 	}
 
-	public Reading(int id, long lattitude, long longitude, String timeStamp, float fuelVolume, int speed, int engineHp,
-			boolean checkEngineLightOn, boolean engineCoolantLow, boolean cruiseControlOn, long engineRpm) {
+	public Reading(int id, String vin, long lattitude, long longitude, Timestamp timestamp, float fuelVolume, int speed,
+			int engineHp, boolean checkEngineLightOn, boolean engineCoolantLow, boolean cruiseControlOn, long engineRpm,
+			Tires tires, List<Alert> alerts) {
 		super();
 		this.id = id;
+		this.vin = vin;
 		this.lattitude = lattitude;
 		this.longitude = longitude;
-		this.timeStamp = timeStamp;
+		this.timestamp = timestamp;
 		this.fuelVolume = fuelVolume;
 		this.speed = speed;
 		this.engineHp = engineHp;
@@ -49,6 +60,8 @@ public class Reading {
 		this.engineCoolantLow = engineCoolantLow;
 		this.cruiseControlOn = cruiseControlOn;
 		this.engineRpm = engineRpm;
+		this.tires = tires;
+		this.alerts = alerts;
 	}
 
 	public int getId() {
@@ -75,12 +88,12 @@ public class Reading {
 		this.longitude = longitude;
 	}
 
-	public String getTimeStamp() {
-		return timeStamp;
+	public Timestamp getTimestamp() {
+		return timestamp;
 	}
 
-	public void setTimeStamp(String timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public float getFuelVolume() {
@@ -155,12 +168,21 @@ public class Reading {
 		this.vin = vin;
 	}
 
+	public List<Alert> getAlerts() {
+		return alerts;
+	}
+
+	public void setAlerts(List<Alert> alerts) {
+		this.alerts = alerts;
+	}
+
 	@Override
 	public String toString() {
 		return "Reading [id=" + id + ", vin=" + vin + ", lattitude=" + lattitude + ", longitude=" + longitude
-				+ ", timeStamp=" + timeStamp + ", fuelVolume=" + fuelVolume + ", speed=" + speed + ", engineHp="
+				+ ", timestamp=" + timestamp + ", fuelVolume=" + fuelVolume + ", speed=" + speed + ", engineHp="
 				+ engineHp + ", checkEngineLightOn=" + checkEngineLightOn + ", engineCoolantLow=" + engineCoolantLow
-				+ ", cruiseControlOn=" + cruiseControlOn + ", engineRpm=" + engineRpm + ", tires=" + tires + "]";
+				+ ", cruiseControlOn=" + cruiseControlOn + ", engineRpm=" + engineRpm + ", tires=" + tires + ", alerts="
+				+ alerts + "]";
 	}
 
 }

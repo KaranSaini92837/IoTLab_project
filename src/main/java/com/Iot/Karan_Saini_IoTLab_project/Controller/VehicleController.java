@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Iot.Karan_Saini_IoTLab_project.Entity.Alert;
 import com.Iot.Karan_Saini_IoTLab_project.Entity.Reading;
 import com.Iot.Karan_Saini_IoTLab_project.Entity.Vehicle;
 import com.Iot.Karan_Saini_IoTLab_project.Repository.VehicleRepository;
@@ -30,12 +31,12 @@ public class VehicleController {
 	public void putVehicles(HttpServletRequest request, HttpServletResponse response, @RequestBody Vehicle vehicle[]) {
 		for (int i = 0; i < vehicle.length; i++) {
 
-//			if (vehicleRepo.fi) {
-				vehicleService.addVehicle(vehicle[i]);
-		//	}
-//			else {
-//				
-//			}
+			// if (vehicleRepo.fi) {
+			vehicleService.addVehicle(vehicle[i]);
+			// }
+			// else {
+			//
+			// }
 
 			System.out.println("Vehicle added: " + vehicle[i]);
 		}
@@ -45,17 +46,28 @@ public class VehicleController {
 	@PostMapping("/readings")
 	public void postVehicleData(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody Reading vehiclereading) {
-		
+
 		Vehicle vehicle = vehicleRepo.findByVin(vehiclereading.getVin());
 		vehicle.setReading(vehiclereading);
+		if (vehicle.getRedlineRpm() < vehiclereading.getEngineRpm()) {
+			Alert alert = new Alert("HIGH", "Warning!!!!", vehiclereading.getTimestamp());
+			vehiclereading.getAlerts().add(alert);
+		}
+		if (vehiclereading.getFuelVolume() < (0.1) * vehicle.getMaxFuelVolume()) {
+			Alert alert = new Alert("MEDIUM", "Warning!!!!", vehiclereading.getTimestamp());
+			vehiclereading.getAlerts().add(alert);
+		}
+//		if(vehiclereading.getTires().getBackLeft()<32 || vehiclereading.getTires().getBackLeft() >36 || vehiclereading.getTires().getBackRight() >36 || vehiclereading.getTires().getBackRight() <32) {
+//			
+//		}
 		vehicleService.addVehicle(vehicle);
 
 	}
 
 	@GetMapping
 	public void getMapping() {
-		
-		for(Vehicle v:vehicleService.getAllVehicles()) {
+
+		for (Vehicle v : vehicleService.getAllVehicles()) {
 			System.out.println(v);
 		}
 	}
