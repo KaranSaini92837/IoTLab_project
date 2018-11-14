@@ -133,7 +133,7 @@ public class Vehicle {
 	public String toString() {
 		return "Vehicle [id=" + id + ", vin=" + vin + ", make=" + make + ", model=" + model + ", year=" + year
 				+ ", redlineRpm=" + redlineRpm + ", maxFuelVolume=" + maxFuelVolume + ", lastServiceDate="
-				+ lastServiceDate + ", readings=" + readings + ", alerts=" + alerts + "]";
+				+ lastServiceDate + "]";
 	}
 
 }

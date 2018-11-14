@@ -34,12 +34,23 @@ public class VehicleController {
 	public void putVehicles(HttpServletRequest request, HttpServletResponse response, @RequestBody Vehicle vehicle[]) {
 		for (int i = 0; i < vehicle.length; i++) {
 
-			// if (vehicleRepo.fi) {
-			vehicleService.addVehicle(vehicle[i]);
-			// }
-			// else {
-			//
-			// }
+			 if (vehicleService.getVehicleByVin(vehicle[i].getVin()) != null) {
+				 Vehicle veh = vehicleService.getVehicleByVin(vehicle[i].getVin());
+				// veh.setAlerts(vehicle[i].getAlerts());
+				// veh.setId(vehicle[i].getId());
+				 veh.setLastServiceDate(vehicle[i].getLastServiceDate());
+				 veh.setMake(vehicle[i].getMake());
+				 veh.setMaxFuelVolume(vehicle[i].getMaxFuelVolume());
+				 veh.setModel(vehicle[i].getModel());
+				// veh.setReadings(vehicle[i].getReadings());
+				 veh.setRedlineRpm(vehicle[i].getRedlineRpm());
+				 veh.setYear(vehicle[i].getYear());
+				 vehicleService.addVehicle(veh);
+				 System.out.println("==================================Vehicle Updated===============================================");
+			 }
+			 else {
+				 vehicleService.addVehicle(vehicle[i]);
+			 }
 
 			System.out.println("Vehicle added: " + vehicle[i]);
 		}
@@ -50,22 +61,27 @@ public class VehicleController {
 	public void postVehicleData(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody Reading vehiclereading) {
 
-		Vehicle vehicle = vehicleRepo.findByVin(vehiclereading.getVin());
+		Vehicle vehicle = vehicleService.getVehicleByVin(vehiclereading.getVin());
 		vehicle.getReadings().add(vehiclereading);
 		if (vehicle.getRedlineRpm() < vehiclereading.getEngineRpm()) {
 			Alert alert = new Alert("HIGH", "Warning!!!!", vehiclereading.getTimestamp());
 			vehicle.getAlerts().add(alert);
 		}
 		if (vehiclereading.getFuelVolume() < (0.1) * vehicle.getMaxFuelVolume()) {
-			Alert alert = new Alert("MEDIUM", "Warning!!!!", vehiclereading.getTimestamp());
+			Alert alert = new Alert("MEDIUM", "BeWare", vehiclereading.getTimestamp());
 			vehicle.getAlerts().add(alert);
 		}
-		// if(vehiclereading.getTires().getBackLeft()<32 ||
-		// vehiclereading.getTires().getBackLeft() >36 ||
-		// vehiclereading.getTires().getBackRight() >36 ||
-		// vehiclereading.getTires().getBackRight() <32) {
-		//
-		// }
+		if (vehiclereading.getTires().getBackLeft() < 32 ||
+			vehiclereading.getTires().getBackLeft() > 36|| 
+			vehiclereading.getTires().getBackRight() > 36 ||
+			vehiclereading.getTires().getBackRight() < 32|| 
+			vehiclereading.getTires().getFrontLeft() < 32 || 
+			vehiclereading.getTires().getFrontLeft() > 36 || 
+			vehiclereading.getTires().getFrontRight() > 36 || 
+			vehiclereading.getTires().getFrontRight() < 32) {
+			Alert alert = new Alert("LOW", "Careful", vehiclereading.getTimestamp());
+			vehicle.getAlerts().add(alert);
+		}
 		vehicleService.addVehicle(vehicle);
 
 	}
@@ -77,14 +93,15 @@ public class VehicleController {
 		return vehicleService.getAllVehicles();
 	}
 
-	 @CrossOrigin
-	 @GetMapping("/getVehicleAlerts/{vin}")
-	 public List<Alert> getVehicleAlerts(@PathVariable String vin, HttpServletRequest request, HttpServletResponse response){
-		 
-		 Vehicle vehicle = vehicleRepo.findByVin(vin);
-		//  return vehicle.getReading().getAlerts();
-		 return vehicle.getAlerts();
-		 
-	 }
+	@CrossOrigin
+	@GetMapping("/getVehicleAlerts/{vin}")
+	public List<Alert> getVehicleAlerts(@PathVariable String vin, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Vehicle vehicle = vehicleRepo.findByVin(vin);
+		// return vehicle.getReading().getAlerts();
+		return vehicle.getAlerts();
+
+	}
 
 }

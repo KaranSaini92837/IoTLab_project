@@ -29,4 +29,9 @@ public class VehicleServiceImpl implements VehicleService {
 		return (List<Vehicle>) vehicleRepo.findAll();
 	}
 
+	@Override
+	public Vehicle getVehicleByVin(String vin) {
+		return vehicleRepo.findByVin(vin);
+	}
+
 }
