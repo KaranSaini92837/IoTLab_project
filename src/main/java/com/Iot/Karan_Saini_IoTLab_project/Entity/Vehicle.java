@@ -1,15 +1,19 @@
 package com.Iot.Karan_Saini_IoTLab_project.Entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Vehicle {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String vin;
 	private String make;
@@ -18,6 +22,10 @@ public class Vehicle {
 	private int redlineRpm;
 	private int maxFuelVolume;
 	private String lastServiceDate;
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "reading_id")
+	private Reading reading;
 
 	public Vehicle() {
 
@@ -91,10 +99,27 @@ public class Vehicle {
 		this.lastServiceDate = lastServiceDate;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Reading getReading() {
+		return reading;
+	}
+
+	public void setReading(Reading reading) {
+		this.reading = reading;
+	}
+
 	@Override
 	public String toString() {
-		return "Vehicle [vin=" + vin + ", make=" + make + ", model=" + model + ", year=" + year + ", redlineRpm="
-				+ redlineRpm + ", maxFuelVolume=" + maxFuelVolume + ", lastServiceDate=" + lastServiceDate + "]";
+		return "Vehicle [id=" + id + ", vin=" + vin + ", make=" + make + ", model=" + model + ", year=" + year
+				+ ", redlineRpm=" + redlineRpm + ", maxFuelVolume=" + maxFuelVolume + ", lastServiceDate="
+				+ lastServiceDate + ", reading=" + reading + "]";
 	}
 
 }
