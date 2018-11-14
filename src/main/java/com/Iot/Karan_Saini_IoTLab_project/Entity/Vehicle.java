@@ -1,13 +1,15 @@
 package com.Iot.Karan_Saini_IoTLab_project.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Vehicle {
@@ -23,9 +25,13 @@ public class Vehicle {
 	private int maxFuelVolume;
 	private String lastServiceDate;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "reading_id")
-	private Reading reading;
+	private List<Reading> readings = new ArrayList<>();
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "alert_id")
+	private List<Alert> alerts = new ArrayList<>();
 
 	public Vehicle() {
 
@@ -107,19 +113,27 @@ public class Vehicle {
 		this.id = id;
 	}
 
-	public Reading getReading() {
-		return reading;
+	public List<Reading> getReadings() {
+		return readings;
 	}
 
-	public void setReading(Reading reading) {
-		this.reading = reading;
+	public void setReadings(List<Reading> readings) {
+		this.readings = readings;
+	}
+
+	public List<Alert> getAlerts() {
+		return alerts;
+	}
+
+	public void setAlerts(List<Alert> alerts) {
+		this.alerts = alerts;
 	}
 
 	@Override
 	public String toString() {
 		return "Vehicle [id=" + id + ", vin=" + vin + ", make=" + make + ", model=" + model + ", year=" + year
 				+ ", redlineRpm=" + redlineRpm + ", maxFuelVolume=" + maxFuelVolume + ", lastServiceDate="
-				+ lastServiceDate + ", reading=" + reading + "]";
+				+ lastServiceDate + ", readings=" + readings + ", alerts=" + alerts + "]";
 	}
 
 }

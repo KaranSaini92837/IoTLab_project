@@ -1,11 +1,14 @@
 package com.Iot.Karan_Saini_IoTLab_project.Controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,28 +51,40 @@ public class VehicleController {
 			@RequestBody Reading vehiclereading) {
 
 		Vehicle vehicle = vehicleRepo.findByVin(vehiclereading.getVin());
-		vehicle.setReading(vehiclereading);
+		vehicle.getReadings().add(vehiclereading);
 		if (vehicle.getRedlineRpm() < vehiclereading.getEngineRpm()) {
 			Alert alert = new Alert("HIGH", "Warning!!!!", vehiclereading.getTimestamp());
-			vehiclereading.getAlerts().add(alert);
+			vehicle.getAlerts().add(alert);
 		}
 		if (vehiclereading.getFuelVolume() < (0.1) * vehicle.getMaxFuelVolume()) {
 			Alert alert = new Alert("MEDIUM", "Warning!!!!", vehiclereading.getTimestamp());
-			vehiclereading.getAlerts().add(alert);
+			vehicle.getAlerts().add(alert);
 		}
-//		if(vehiclereading.getTires().getBackLeft()<32 || vehiclereading.getTires().getBackLeft() >36 || vehiclereading.getTires().getBackRight() >36 || vehiclereading.getTires().getBackRight() <32) {
-//			
-//		}
+		// if(vehiclereading.getTires().getBackLeft()<32 ||
+		// vehiclereading.getTires().getBackLeft() >36 ||
+		// vehiclereading.getTires().getBackRight() >36 ||
+		// vehiclereading.getTires().getBackRight() <32) {
+		//
+		// }
 		vehicleService.addVehicle(vehicle);
 
 	}
 
-	@GetMapping
-	public void getMapping() {
+	@CrossOrigin
+	@GetMapping("/getVehicleDetails")
+	public List<Vehicle> getVehicleDetails(HttpServletResponse response) {
 
-		for (Vehicle v : vehicleService.getAllVehicles()) {
-			System.out.println(v);
-		}
+		return vehicleService.getAllVehicles();
 	}
+
+	 @CrossOrigin
+	 @GetMapping("/getVehicleAlerts/{vin}")
+	 public List<Alert> getVehicleAlerts(@PathVariable String vin, HttpServletRequest request, HttpServletResponse response){
+		 
+		 Vehicle vehicle = vehicleRepo.findByVin(vin);
+		//  return vehicle.getReading().getAlerts();
+		 return vehicle.getAlerts();
+		 
+	 }
 
 }

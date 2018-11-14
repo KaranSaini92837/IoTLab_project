@@ -1,9 +1,6 @@
 package com.Iot.Karan_Saini_IoTLab_project.Entity;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -31,13 +27,9 @@ public class Reading {
 	private boolean cruiseControlOn;
 	private long engineRpm;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "tires_id")
 	private Tires tires;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "alert_id")
-	private List<Alert> alerts = new ArrayList<>();
 
 	public Reading() {
 		super();
@@ -46,7 +38,7 @@ public class Reading {
 
 	public Reading(int id, String vin, long lattitude, long longitude, Timestamp timestamp, float fuelVolume, int speed,
 			int engineHp, boolean checkEngineLightOn, boolean engineCoolantLow, boolean cruiseControlOn, long engineRpm,
-			Tires tires, List<Alert> alerts) {
+			Tires tires) {
 		super();
 		this.id = id;
 		this.vin = vin;
@@ -61,7 +53,6 @@ public class Reading {
 		this.cruiseControlOn = cruiseControlOn;
 		this.engineRpm = engineRpm;
 		this.tires = tires;
-		this.alerts = alerts;
 	}
 
 	public int getId() {
@@ -168,21 +159,12 @@ public class Reading {
 		this.vin = vin;
 	}
 
-	public List<Alert> getAlerts() {
-		return alerts;
-	}
-
-	public void setAlerts(List<Alert> alerts) {
-		this.alerts = alerts;
-	}
-
 	@Override
 	public String toString() {
 		return "Reading [id=" + id + ", vin=" + vin + ", lattitude=" + lattitude + ", longitude=" + longitude
 				+ ", timestamp=" + timestamp + ", fuelVolume=" + fuelVolume + ", speed=" + speed + ", engineHp="
 				+ engineHp + ", checkEngineLightOn=" + checkEngineLightOn + ", engineCoolantLow=" + engineCoolantLow
-				+ ", cruiseControlOn=" + cruiseControlOn + ", engineRpm=" + engineRpm + ", tires=" + tires + ", alerts="
-				+ alerts + "]";
+				+ ", cruiseControlOn=" + cruiseControlOn + ", engineRpm=" + engineRpm + ", tires=" + tires + "]";
 	}
 
 }
