@@ -54,7 +54,10 @@ public class VehicleController {
 
 	@GetMapping
 	public void getMapping() {
-		System.out.println("Hello world");
+		
+		for(Vehicle v:vehicleService.getAllVehicles()) {
+			System.out.println(v);
+		}
 	}
 
 }
