@@ -1,5 +1,7 @@
 package com.Iot.Karan_Saini_IoTLab_project.Controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Iot.Karan_Saini_IoTLab_project.Entity.Alert;
 import com.Iot.Karan_Saini_IoTLab_project.Entity.Reading;
 import com.Iot.Karan_Saini_IoTLab_project.Entity.Vehicle;
-import com.Iot.Karan_Saini_IoTLab_project.Repository.VehicleRepository;
+import com.Iot.Karan_Saini_IoTLab_project.Service.AlertService;
 import com.Iot.Karan_Saini_IoTLab_project.Service.VehicleService;
 
 @RestController
@@ -26,31 +28,34 @@ public class VehicleController {
 	@Autowired
 	private VehicleService vehicleService;
 
+	// @Autowired
+	// private VehicleRepository vehicleRepo;
+
 	@Autowired
-	private VehicleRepository vehicleRepo;
+	private AlertService alertService;
 
 	@CrossOrigin
 	@PutMapping("/vehicles")
 	public void putVehicles(HttpServletRequest request, HttpServletResponse response, @RequestBody Vehicle vehicle[]) {
-		for (int i = 0; i < vehicle.length; i++) {
 
-			 if (vehicleService.getVehicleByVin(vehicle[i].getVin()) != null) {
-				 Vehicle veh = vehicleService.getVehicleByVin(vehicle[i].getVin());
+		for (int i = 0; i < vehicle.length; i++) {
+			if (vehicleService.getVehicleByVin(vehicle[i].getVin()) != null) {
+				Vehicle veh = vehicleService.getVehicleByVin(vehicle[i].getVin());
 				// veh.setAlerts(vehicle[i].getAlerts());
 				// veh.setId(vehicle[i].getId());
-				 veh.setLastServiceDate(vehicle[i].getLastServiceDate());
-				 veh.setMake(vehicle[i].getMake());
-				 veh.setMaxFuelVolume(vehicle[i].getMaxFuelVolume());
-				 veh.setModel(vehicle[i].getModel());
+				veh.setLastServiceDate(vehicle[i].getLastServiceDate());
+				veh.setMake(vehicle[i].getMake());
+				veh.setMaxFuelVolume(vehicle[i].getMaxFuelVolume());
+				veh.setModel(vehicle[i].getModel());
 				// veh.setReadings(vehicle[i].getReadings());
-				 veh.setRedlineRpm(vehicle[i].getRedlineRpm());
-				 veh.setYear(vehicle[i].getYear());
-				 vehicleService.addVehicle(veh);
-				 System.out.println("==================================Vehicle Updated===============================================");
-			 }
-			 else {
-				 vehicleService.addVehicle(vehicle[i]);
-			 }
+				veh.setRedlineRpm(vehicle[i].getRedlineRpm());
+				veh.setYear(vehicle[i].getYear());
+				vehicleService.addVehicle(veh);
+				System.out.println(
+						"==================================Vehicle Updated===============================================");
+			} else {
+				vehicleService.addVehicle(vehicle[i]);
+			}
 
 			System.out.println("Vehicle added: " + vehicle[i]);
 		}
@@ -71,14 +76,10 @@ public class VehicleController {
 			Alert alert = new Alert("MEDIUM", "BeWare", vehiclereading.getTimestamp());
 			vehicle.getAlerts().add(alert);
 		}
-		if (vehiclereading.getTires().getBackLeft() < 32 ||
-			vehiclereading.getTires().getBackLeft() > 36|| 
-			vehiclereading.getTires().getBackRight() > 36 ||
-			vehiclereading.getTires().getBackRight() < 32|| 
-			vehiclereading.getTires().getFrontLeft() < 32 || 
-			vehiclereading.getTires().getFrontLeft() > 36 || 
-			vehiclereading.getTires().getFrontRight() > 36 || 
-			vehiclereading.getTires().getFrontRight() < 32) {
+		if (vehiclereading.getTires().getBackLeft() < 32 || vehiclereading.getTires().getBackLeft() > 36
+				|| vehiclereading.getTires().getBackRight() > 36 || vehiclereading.getTires().getBackRight() < 32
+				|| vehiclereading.getTires().getFrontLeft() < 32 || vehiclereading.getTires().getFrontLeft() > 36
+				|| vehiclereading.getTires().getFrontRight() > 36 || vehiclereading.getTires().getFrontRight() < 32) {
 			Alert alert = new Alert("LOW", "Careful", vehiclereading.getTimestamp());
 			vehicle.getAlerts().add(alert);
 		}
@@ -98,10 +99,18 @@ public class VehicleController {
 	public List<Alert> getVehicleAlerts(@PathVariable String vin, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		Vehicle vehicle = vehicleRepo.findByVin(vin);
-		// return vehicle.getReading().getAlerts();
+		Vehicle vehicle = vehicleService.getVehicleByVin(vin);
 		return vehicle.getAlerts();
+		// vehicleRepo.findByVin(vin);
 
+	}
+
+	@CrossOrigin
+	@GetMapping("/getHighAlerts")
+	public List<Alert> getHighAlerts() {
+		ArrayList<Alert> alerts = (ArrayList<Alert>) alertService.getAllHighAlerts();
+		Collections.sort(alerts, Collections.reverseOrder());
+		return alerts;
 	}
 
 }

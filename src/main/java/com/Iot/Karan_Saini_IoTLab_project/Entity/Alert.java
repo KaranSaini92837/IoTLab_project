@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Alert {
+public class Alert implements Comparable<Alert>{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +55,11 @@ public class Alert {
 	@Override
 	public String toString() {
 		return "Alert [priority=" + priority + ", message=" + message + ", timestamp=" + timestamp + "]";
+	}
+
+	@Override
+	public int compareTo(Alert o) {
+		return this.getTimestamp().compareTo(o.getTimestamp());
 	}
 	
 }
