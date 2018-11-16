@@ -48,12 +48,6 @@ A step by step series of examples that tell you how to get a development env run
 * [MySql] (https://www.mysql.com/) - Database
 * [Maven](https://maven.apache.org/) - Dependency Management
  
-## Authors
+## Author
 
 * **Karan Saini** - [Karan Saini](https://github.com/KaranSaini92837)
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
