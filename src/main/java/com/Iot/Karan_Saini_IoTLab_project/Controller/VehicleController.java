@@ -1,9 +1,6 @@
 package com.Iot.Karan_Saini_IoTLab_project.Controller;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -114,12 +111,13 @@ public class VehicleController {
 	public List<Alert> getHighAlerts() {
 		
 		List<Alert> alerts = alertService.getAllHighAlerts();
-		Collections.sort(alerts, Collections.reverseOrder());
-		/*
-		 * Limit is 2400 because we need to display only two hours of high alerts.
-		 * So 2 hrs have will have maximum 2400 alerts(Worst case all alerts are HIGH alerts)
-		 */
-		return alerts.stream().limit(2400).collect(Collectors.toList());
+//		Collections.sort(alerts, Collections.reverseOrder());
+//		/*
+//		 * Limit is 2400 because we need to display only two hours of high alerts.
+//		 * So 2 hrs have will have maximum 2400 alerts(Worst case all alerts are HIGH alerts)
+//		 */
+//		return alerts.stream().limit(2400).collect(Collectors.toList());
+		return alerts;
 	}
 
 }
