@@ -24,7 +24,7 @@ What things you need to install the software and how to install them
     For Unix/Linux - https://dev.mysql.com/doc/workbench/en/wb-linux.html
 ```
 
-### Installing
+### Installation and Working of Project
 
 A step by step series of examples that tell you how to get a development env running
 
