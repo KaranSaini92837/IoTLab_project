@@ -29,12 +29,18 @@ What things you need to install the software and how to install them
 A step by step series of examples that tell you how to get a development env running
 
 ```
-1. Clone the project in your local machine
+1. Clone the project in your local machine.
+
 2. Open this folder in an IDE(Eclipse, IntelliJ etc).
+
 3. Create a Schema named IoT in MySqlWorkbench/ via CLI anyway you feel comfortable.
+
 4. Now run the Application from the IDE. For running in the IDE run KaranSainiIoTLabProjectApplication.java
+
 5. Now start your web browser and hit http://mocker.ennate.academy/
+
 6. First hit start for http://localhost:8080/vehicles on the right hand site of the site. Then hit start for http://localhost:8080/readings. This will start persisting data in MySql.
+
 7. Now run the below URL's in Postman:
    a) All Vehicle Details : http://localhost:8080/getAllVehicleDetails (GET Request)
    b) Historical Alerts for a vehicle : http://localhost:8080/getVehicleAlerts/{vin} ((GET Request))
