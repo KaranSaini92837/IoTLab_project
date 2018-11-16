@@ -84,14 +84,13 @@ public class VehicleController {
 
 	}
 
-	@CrossOrigin
+	
 	@GetMapping("/getAllVehicleDetails")
 	public List<Vehicle> getAllVehicleDetails(HttpServletRequest request, HttpServletResponse response) {
 
 		return vehicleService.getAllVehicles();
 	}
 
-	@CrossOrigin
 	@GetMapping("/getVehicleAlerts/{vin}")
 	public List<Alert> getVehicleAlerts(@PathVariable String vin, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -100,7 +99,7 @@ public class VehicleController {
 		return vehicle.getAlerts();
 	}
 
-	@CrossOrigin
+	
 	@GetMapping("/getHighAlerts")
 	public List<Alert> getHighAlerts() {
 		List<Alert> alerts = alertService.getAllHighAlerts();
