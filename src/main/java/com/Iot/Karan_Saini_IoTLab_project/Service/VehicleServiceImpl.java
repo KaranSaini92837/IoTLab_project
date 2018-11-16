@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.Iot.Karan_Saini_IoTLab_project.Entity.Alert;
 import com.Iot.Karan_Saini_IoTLab_project.Entity.Vehicle;
 import com.Iot.Karan_Saini_IoTLab_project.Repository.VehicleRepository;
 
@@ -33,12 +32,6 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public Vehicle getVehicleByVin(String vin) {
 		return vehicleRepo.findByVin(vin);
-	}
-
-	@Override
-	public List<Alert> getHighAlerts() {
-		
-		return null;
 	}
 
 }
