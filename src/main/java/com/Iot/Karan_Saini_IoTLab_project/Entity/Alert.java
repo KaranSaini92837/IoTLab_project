@@ -8,8 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Alert implements Comparable<Alert>{
-	
+public class Alert implements Comparable<Alert> {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -69,17 +69,15 @@ public class Alert implements Comparable<Alert>{
 		this.vin = vin;
 	}
 
-	
-
 	@Override
 	public String toString() {
-		return "Alert [" +"priority=" + priority + ", message=" + message + ", timestamp=" + timestamp
-				+ ", vin=" + vin + "]";
+		return "Alert [" + "priority=" + priority + ", message=" + message + ", timestamp=" + timestamp + ", vin=" + vin
+				+ "]";
 	}
 
 	@Override
 	public int compareTo(Alert o) {
 		return this.getTimestamp().compareTo(o.getTimestamp());
 	}
-	
+
 }

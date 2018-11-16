@@ -12,4 +12,3 @@ public class KaranSainiIoTLabProjectApplication {
 		SpringApplication.run(KaranSainiIoTLabProjectApplication.class, args);
 	}
 }
-

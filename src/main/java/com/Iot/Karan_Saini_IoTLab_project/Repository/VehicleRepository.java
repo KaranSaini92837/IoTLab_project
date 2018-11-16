@@ -7,7 +7,7 @@ import com.Iot.Karan_Saini_IoTLab_project.Entity.Vehicle;
 
 @Repository
 public interface VehicleRepository extends CrudRepository<Vehicle, Integer> {
-	
-	//public boolean findByVin(String id);
+
+	// public boolean findByVin(String id);
 	public Vehicle findByVin(String id);
 }

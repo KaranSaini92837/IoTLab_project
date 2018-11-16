@@ -8,7 +8,7 @@ import com.Iot.Karan_Saini_IoTLab_project.Entity.Alert;
 
 @Service
 public interface AlertService {
-	
+
 	public List<Alert> getAllHighAlerts();
 
 }

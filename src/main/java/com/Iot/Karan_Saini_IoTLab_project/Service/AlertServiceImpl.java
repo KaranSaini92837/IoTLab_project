@@ -13,11 +13,11 @@ public class AlertServiceImpl implements AlertService {
 
 	@Autowired
 	private AlertRepository alertRepo;
-	
+
 	@Override
 	public List<Alert> getAllHighAlerts() {
-		
-		//return alertRepo.findByPriority("HIGH");
+
+		// return alertRepo.findByPriority("HIGH");
 		return alertRepo.getListOfHighAlerts();
 	}
 

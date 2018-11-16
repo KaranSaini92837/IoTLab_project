@@ -15,8 +15,6 @@ public class Tires {
 	private int frontRight;
 	private int backLeft;
 	private int backRight;
-	
-	
 
 	public Tires() {
 
