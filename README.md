@@ -11,15 +11,17 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Postman - https://www.getpostman.com/apps
-MySql - 
-  For MacOs - https://dev.mysql.com/doc/refman/5.7/en/osx-installation-pkg.html
-  For Windows - https://dev.mysql.com/doc/refman/5.7/en/mysql-installer.html
-  For Unix/Linux - https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html
-MySqlWorkbench - 
-  For MacOs - https://dev.mysql.com/doc/workbench/en/wb-mac.html
-  For Windows - https://dev.mysql.com/doc/workbench/en/wb-windows.html
-  For Unix/Linux - https://dev.mysql.com/doc/workbench/en/wb-linux.html
+1) Postman - https://www.getpostman.com/apps
+
+2) MySql - 
+    For MacOs - https://dev.mysql.com/doc/refman/5.7/en/osx-installation-pkg.html
+    For Windows - https://dev.mysql.com/doc/refman/5.7/en/mysql-installer.html
+    For Unix/Linux - https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html
+
+3) MySqlWorkbench - 
+    For MacOs - https://dev.mysql.com/doc/workbench/en/wb-mac.html
+    For Windows - https://dev.mysql.com/doc/workbench/en/wb-windows.html
+    For Unix/Linux - https://dev.mysql.com/doc/workbench/en/wb-linux.html
 ```
 
 ### Installing
