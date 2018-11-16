@@ -1,6 +1,4 @@
-IoTLab_project
-
-# Project Title
+# IoTLab_project
 
 This is a REST API which I have built to constantly take readings for vehicles and track the health of the vehicle by giving them alerts on specific events. I have used Spring Boot as my Web Framework and used MySql for persisting data with the help of Hibernate.
 
