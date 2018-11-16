@@ -33,6 +33,9 @@ A step by step series of examples that tell you how to get a development env run
 6. First hit start for http://localhost:8080/vehicles on the right hand site of the site. Then hit start for                      http://localhost:8080/readings. This will start persisting data in MySql.
 7. Now run the below URL's in Postman:
    a) All Vehicle Details : http://localhost:8080/getAllVehicleDetails (GET Request)
+ ```
+ <img width="1440" alt="screen shot 2018-11-15 at 11 16 52 pm" src="https://user-images.githubusercontent.com/37518846/48597612-b045d700-e92c-11e8-8fee-3cefd44dc510.png">
+ ```
    b) Historical Alerts for a vehicle : http://localhost:8080/getVehicleAlerts/{vin} ((GET Request))
        vin - This is the vehicles Identification number (You can see this in the Database in the vehicle table)
    c) High Alerts for all Vehicles in the past 2 hours : http://localhost:8080/getHighAlerts (GET Request)
