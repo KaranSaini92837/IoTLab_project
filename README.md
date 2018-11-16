@@ -16,6 +16,10 @@ MySql -
   For MacOs - https://dev.mysql.com/doc/refman/5.7/en/osx-installation-pkg.html
   For Windows - https://dev.mysql.com/doc/refman/5.7/en/mysql-installer.html
   For Unix/Linux - https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html
+MySqlWorkbench - 
+  For MacOs - https://dev.mysql.com/doc/workbench/en/wb-mac.html
+  For Windows - https://dev.mysql.com/doc/workbench/en/wb-windows.html
+  For Unix/Linux - https://dev.mysql.com/doc/workbench/en/wb-linux.html
 ```
 
 ### Installing
@@ -25,7 +29,7 @@ A step by step series of examples that tell you how to get a development env run
 ```
 1. Clone the project in your local machine
 2. Open this folder in an IDE(Eclipse, IntelliJ etc).
-3. Create a Schema named IoT in MySql.
+3. Create a Schema named IoT in MySqlWorkbench/ via CLI anyway you feel comfortable.
 4. Now run the Application from the IDE. For running in the IDE run KaranSainiIoTLabProjectApplication.java
 5. Now start your web browser and hit http://mocker.ennate.academy/
 6. First hit start for http://localhost:8080/vehicles on the right hand site of the site. Then hit start for http://localhost:8080/readings. This will start persisting data in MySql.
