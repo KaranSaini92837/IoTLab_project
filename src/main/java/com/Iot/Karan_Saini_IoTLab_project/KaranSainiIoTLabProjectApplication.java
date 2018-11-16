@@ -13,4 +13,3 @@ public class KaranSainiIoTLabProjectApplication {
 	}
 }
 
-//com.mysql.jdbc.Driver?

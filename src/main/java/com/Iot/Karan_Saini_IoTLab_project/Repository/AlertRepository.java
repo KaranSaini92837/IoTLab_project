@@ -16,10 +16,3 @@ public interface AlertRepository extends CrudRepository<Alert, Integer> {
 	public List<Alert> getListOfHighAlerts();
 
 }
-
-//WHERE TIMESTAMP > Current time - 2 hours”
-
-/*
- * 13:21:31	SELECT * FROM IoT.alert WHERE Timestamp > current_time()-2hour and Priortiy = HIGH LIMIT 0, 1000	Error Code: 1054. Unknown column '2hour' in 'where clause'	0.00063 sec
-
- */
