@@ -45,7 +45,7 @@ A step by step series of examples that tell you how to get a development env run
 ## Built With
 
 * [Spring Boot](https://spring.io/guides/gs/spring-boot/) - The web framework
-* [MySql] (https://www.mysql.com/) - Database
+* [MySql](https://www.mysql.com/) - Database
 * [Maven](https://maven.apache.org/) - Dependency Management
  
 ## Author
