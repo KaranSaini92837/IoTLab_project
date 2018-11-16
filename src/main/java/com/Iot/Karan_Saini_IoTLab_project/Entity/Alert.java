@@ -16,6 +16,7 @@ public class Alert implements Comparable<Alert>{
 	private String priority;
 	private String message;
 	private Timestamp timestamp;
+	private String vin;
 
 	public Alert() {
 		super();
@@ -52,9 +53,28 @@ public class Alert implements Comparable<Alert>{
 		this.timestamp = timestamp;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getVin() {
+		return vin;
+	}
+
+	public void setVin(String vin) {
+		this.vin = vin;
+	}
+
+	
+
 	@Override
 	public String toString() {
-		return "Alert [priority=" + priority + ", message=" + message + ", timestamp=" + timestamp + "]";
+		return "Alert [" +"priority=" + priority + ", message=" + message + ", timestamp=" + timestamp
+				+ ", vin=" + vin + "]";
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 package com.Iot.Karan_Saini_IoTLab_project.Controller;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,9 +28,6 @@ public class VehicleController {
 	@Autowired
 	private VehicleService vehicleService;
 
-	// @Autowired
-	// private VehicleRepository vehicleRepo;
-
 	@Autowired
 	private AlertService alertService;
 
@@ -41,13 +38,10 @@ public class VehicleController {
 		for (int i = 0; i < vehicle.length; i++) {
 			if (vehicleService.getVehicleByVin(vehicle[i].getVin()) != null) {
 				Vehicle veh = vehicleService.getVehicleByVin(vehicle[i].getVin());
-				// veh.setAlerts(vehicle[i].getAlerts());
-				// veh.setId(vehicle[i].getId());
 				veh.setLastServiceDate(vehicle[i].getLastServiceDate());
 				veh.setMake(vehicle[i].getMake());
 				veh.setMaxFuelVolume(vehicle[i].getMaxFuelVolume());
 				veh.setModel(vehicle[i].getModel());
-				// veh.setReadings(vehicle[i].getReadings());
 				veh.setRedlineRpm(vehicle[i].getRedlineRpm());
 				veh.setYear(vehicle[i].getYear());
 				vehicleService.addVehicle(veh);
@@ -70,10 +64,12 @@ public class VehicleController {
 		vehicle.getReadings().add(vehiclereading);
 		if (vehicle.getRedlineRpm() < vehiclereading.getEngineRpm()) {
 			Alert alert = new Alert("HIGH", "Warning!!!!", vehiclereading.getTimestamp());
+			alert.setVin(vehiclereading.getVin());
 			vehicle.getAlerts().add(alert);
 		}
 		if (vehiclereading.getFuelVolume() < (0.1) * vehicle.getMaxFuelVolume()) {
 			Alert alert = new Alert("MEDIUM", "BeWare", vehiclereading.getTimestamp());
+			alert.setVin(vehiclereading.getVin());
 			vehicle.getAlerts().add(alert);
 		}
 		if (vehiclereading.getTires().getBackLeft() < 32 || vehiclereading.getTires().getBackLeft() > 36
@@ -81,6 +77,7 @@ public class VehicleController {
 				|| vehiclereading.getTires().getFrontLeft() < 32 || vehiclereading.getTires().getFrontLeft() > 36
 				|| vehiclereading.getTires().getFrontRight() > 36 || vehiclereading.getTires().getFrontRight() < 32) {
 			Alert alert = new Alert("LOW", "Careful", vehiclereading.getTimestamp());
+			alert.setVin(vehiclereading.getVin());
 			vehicle.getAlerts().add(alert);
 		}
 		vehicleService.addVehicle(vehicle);
@@ -88,8 +85,8 @@ public class VehicleController {
 	}
 
 	@CrossOrigin
-	@GetMapping("/getVehicleDetails")
-	public List<Vehicle> getVehicleDetails(HttpServletResponse response) {
+	@GetMapping("/getAllVehicleDetails")
+	public List<Vehicle> getAllVehicleDetails(HttpServletRequest request, HttpServletResponse response) {
 
 		return vehicleService.getAllVehicles();
 	}
@@ -101,16 +98,14 @@ public class VehicleController {
 
 		Vehicle vehicle = vehicleService.getVehicleByVin(vin);
 		return vehicle.getAlerts();
-		// vehicleRepo.findByVin(vin);
-
 	}
 
 	@CrossOrigin
 	@GetMapping("/getHighAlerts")
 	public List<Alert> getHighAlerts() {
-		ArrayList<Alert> alerts = (ArrayList<Alert>) alertService.getAllHighAlerts();
+		List<Alert> alerts = alertService.getAllHighAlerts();
 		Collections.sort(alerts, Collections.reverseOrder());
-		return alerts;
+		return alerts.stream().limit(2400).collect(Collectors.toList());
 	}
 
 }
