@@ -35,6 +35,7 @@ A step by step series of examples that tell you how to get a development env run
    a) All Vehicle Details : http://localhost:8080/getAllVehicleDetails (GET Request)
  ```
  <img width="1440" alt="screen shot 2018-11-15 at 11 16 52 pm" src="https://user-images.githubusercontent.com/37518846/48597612-b045d700-e92c-11e8-8fee-3cefd44dc510.png">
+ 
  ```
    b) Historical Alerts for a vehicle : http://localhost:8080/getVehicleAlerts/{vin} ((GET Request))
        vin - This is the vehicles Identification number (You can see this in the Database in the vehicle table)
