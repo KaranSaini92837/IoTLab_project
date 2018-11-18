@@ -3,7 +3,6 @@ package com.Iot.Karan_Saini_IoTLab_project.Entity;
 import java.sql.Timestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +26,7 @@ public class Reading {
 	private boolean cruiseControlOn;
 	private long engineRpm;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "tires_id")
 	private Tires tires;
 

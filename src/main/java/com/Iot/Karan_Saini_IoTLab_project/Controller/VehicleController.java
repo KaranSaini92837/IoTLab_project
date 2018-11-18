@@ -27,8 +27,10 @@ public class VehicleController {
 
 	@Autowired
 	private AlertService alertService;
+	
+	@Autowired
 
-	@CrossOrigin
+	@CrossOrigin()
 	@PutMapping("/vehicles")
 	public void putVehicles(HttpServletRequest request, HttpServletResponse response, @RequestBody Vehicle vehicle[]) {
 
