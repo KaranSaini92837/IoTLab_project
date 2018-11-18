@@ -28,7 +28,7 @@ public class VehicleController {
 	@Autowired
 	private AlertService alertService;
 
-	@CrossOrigin(origins="http://localhost:8080")
+	@CrossOrigin
 	@PutMapping("/vehicles")
 	public void putVehicles(HttpServletRequest request, HttpServletResponse response, @RequestBody Vehicle vehicle[]) {
 
@@ -54,7 +54,7 @@ public class VehicleController {
 		}
 	}
 
-	@CrossOrigin(origins="http://localhost:8080")
+	@CrossOrigin
 	@PostMapping("/readings")
 	public void postVehicleData(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody Reading vehiclereading) {
