@@ -35,7 +35,7 @@ A step by step series of examples that tell you how to get a development env run
 
 3. Create a Schema named IoT in MySqlWorkbench/ via MySql CLI anyway you feel comfortable.
 
-4. Now run the Application from the IDE. For running in the IDE run KaranSainiIoTLabProjectApplication.java
+4. Now run the Application from the IDE. For running the app in the IDE run KaranSainiIoTLabProjectApplication.java
 
 5. Now start your web browser and hit http://mocker.ennate.academy/
 
