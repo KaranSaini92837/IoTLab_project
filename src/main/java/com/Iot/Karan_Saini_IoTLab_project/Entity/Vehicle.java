@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 public class Vehicle {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String vin;
 	private String make;
