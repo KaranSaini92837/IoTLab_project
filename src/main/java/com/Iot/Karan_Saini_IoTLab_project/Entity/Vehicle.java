@@ -1,5 +1,6 @@
 package com.Iot.Karan_Saini_IoTLab_project.Entity;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import javax.persistence.OneToMany;
 public class Vehicle {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String vin;
 	private String make;
@@ -23,22 +24,26 @@ public class Vehicle {
 	private int year;
 	private int redlineRpm;
 	private int maxFuelVolume;
-	private String lastServiceDate;
-
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "reading_id")
-	private List<Reading> readings = new ArrayList<>();
+	private Timestamp lastServiceDate;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "alert_id")
-	private List<Alert> alerts = new ArrayList<>();
+	private List<Alert> alerts = null;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public Vehicle() {
 
 	}
 
 	public Vehicle(String vin, String make, String model, int year, int redlineRpm, int maxFuelVolume,
-			String lastServiceDate) {
+			Timestamp lastServiceDate) {
 		super();
 		this.vin = vin;
 		this.make = make;
@@ -97,30 +102,14 @@ public class Vehicle {
 		this.maxFuelVolume = maxFuelVolume;
 	}
 
-	public String getLastServiceDate() {
+	public Timestamp getLastServiceDate() {
 		return lastServiceDate;
 	}
 
-	public void setLastServiceDate(String lastServiceDate) {
+	public void setLastServiceDate(Timestamp lastServiceDate) {
 		this.lastServiceDate = lastServiceDate;
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public List<Reading> getReadings() {
-		return readings;
-	}
-
-	public void setReadings(List<Reading> readings) {
-		this.readings = readings;
-	}
-
+	
 	public List<Alert> getAlerts() {
 		return alerts;
 	}
@@ -128,12 +117,19 @@ public class Vehicle {
 	public void setAlerts(List<Alert> alerts) {
 		this.alerts = alerts;
 	}
+	
+	public void addAlert(Alert alert) {
+		if(alerts.isEmpty()) {
+			alerts = new ArrayList<>();
+			alerts.add(alert);
+		}
+		alerts.add(alert);
+	}
 
 	@Override
 	public String toString() {
-		return "Vehicle [id=" + id + ", vin=" + vin + ", make=" + make + ", model=" + model + ", year=" + year
-				+ ", redlineRpm=" + redlineRpm + ", maxFuelVolume=" + maxFuelVolume + ", lastServiceDate="
-				+ lastServiceDate + "]";
+		return "Vehicle [vin=" + vin + ", make=" + make + ", model=" + model + ", year=" + year + ", redlineRpm="
+				+ redlineRpm + ", maxFuelVolume=" + maxFuelVolume + ", lastServiceDate=" + lastServiceDate + "]";
 	}
 
 }

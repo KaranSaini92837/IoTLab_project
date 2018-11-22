@@ -17,4 +17,6 @@ public interface VehicleService {
 
 	public Vehicle getVehicleByVin(String vin);
 
+	void deleteById(Vehicle vehicle);
+
 }

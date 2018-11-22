@@ -34,4 +34,15 @@ public class VehicleServiceImpl implements VehicleService {
 		return vehicleRepo.findByVin(vin);
 	}
 
+	@Override
+	public void deleteById(Vehicle vehicle) {
+		vehicleRepo.delete(vehicle);
+		
+	}
+
+//	@Override
+//	public boolean existsByVin(String vin) {
+//		return vehicleRepo.;
+//	}
+
 }
