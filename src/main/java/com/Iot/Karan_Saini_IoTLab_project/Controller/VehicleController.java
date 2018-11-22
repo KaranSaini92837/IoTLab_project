@@ -1,5 +1,6 @@
 package com.Iot.Karan_Saini_IoTLab_project.Controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -61,12 +62,12 @@ public class VehicleController {
 
 		if (vehicle.getRedlineRpm() < vehiclereading.getEngineRpm()) {
 
-			Alert alert = new Alert("HIGH", "Warning!!!!", vehiclereading.getTimestamp(), vehiclereading.getVin());
+			Alert alert = new Alert("HIGH", "Warning!!!!", new Timestamp(System.currentTimeMillis()), vehiclereading.getVin());
 			vehicle.addAlert(alert);
 		}
 		if (vehiclereading.getFuelVolume() < (0.1) * vehicle.getMaxFuelVolume()) {
 
-			Alert alert = new Alert("MEDIUM", "BeWare", vehiclereading.getTimestamp(), vehiclereading.getVin());
+			Alert alert = new Alert("MEDIUM", "BeWare", new Timestamp(System.currentTimeMillis()), vehiclereading.getVin());
 			vehicle.addAlert(alert);
 		}
 		if (vehiclereading.getTires().getBackLeft() < 32 || vehiclereading.getTires().getBackLeft() > 36
@@ -74,7 +75,7 @@ public class VehicleController {
 				|| vehiclereading.getTires().getFrontLeft() < 32 || vehiclereading.getTires().getFrontLeft() > 36
 				|| vehiclereading.getTires().getFrontRight() > 36 || vehiclereading.getTires().getFrontRight() < 32) {
 
-			Alert alert = new Alert("LOW", "Careful", vehiclereading.getTimestamp(), vehiclereading.getVin());
+			Alert alert = new Alert("LOW", "Careful", new Timestamp(System.currentTimeMillis()), vehiclereading.getVin());
 			vehicle.addAlert(alert);
 
 		}
