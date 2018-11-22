@@ -16,9 +16,12 @@ public class AlertServiceImpl implements AlertService {
 
 	@Override
 	public List<Alert> getAllHighAlerts() {
-
-		// return alertRepo.findByPriority("HIGH");
 		return alertRepo.getListOfHighAlerts();
+	}
+
+	@Override
+	public List<Alert> getVinAlerts(String vin) {
+		return alertRepo.findByVin(vin);
 	}
 
 }

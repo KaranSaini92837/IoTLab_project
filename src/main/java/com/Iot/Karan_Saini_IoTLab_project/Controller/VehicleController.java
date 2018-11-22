@@ -1,9 +1,6 @@
 package com.Iot.Karan_Saini_IoTLab_project.Controller;
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Iot.Karan_Saini_IoTLab_project.Entity.Alert;
-import com.Iot.Karan_Saini_IoTLab_project.Entity.Reading;
 import com.Iot.Karan_Saini_IoTLab_project.Entity.Vehicle;
 import com.Iot.Karan_Saini_IoTLab_project.Service.AlertService;
 import com.Iot.Karan_Saini_IoTLab_project.Service.VehicleService;
+import com.Iot.Karan_Saini_IoTLab_project.model.Reading;
 
 @RestController
 public class VehicleController {
@@ -28,11 +25,11 @@ public class VehicleController {
 	@Autowired
 	private AlertService alertService;
 	
-	@Autowired
+	int i = 1;
 
 	@CrossOrigin()
 	@PutMapping("/vehicles")
-	public void putVehicles(HttpServletRequest request, HttpServletResponse response, @RequestBody Vehicle vehicle[]) {
+	public void putVehicles(@RequestBody Vehicle [] vehicle) {
 
 		for (int i = 0; i < vehicle.length; i++) {
 			if (vehicleService.getVehicleByVin(vehicle[i].getVin()) != null) {
@@ -44,49 +41,41 @@ public class VehicleController {
 				veh.setModel(vehicle[i].getModel());
 				veh.setRedlineRpm(vehicle[i].getRedlineRpm());
 				veh.setYear(vehicle[i].getYear());
+				veh.getAlerts().clear();
 				vehicleService.addVehicle(veh);
-
 			} else {
 
 				vehicleService.addVehicle(vehicle[i]);
-
 			}
 
 			System.out.println("Vehicle added: " + vehicle[i]);
 		}
+		
 	}
 
 	@CrossOrigin
 	@PostMapping("/readings")
-	public void postVehicleData(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody Reading vehiclereading) {
-
+	public void postVehicleData(@RequestBody Reading vehiclereading) {
+		
 		Vehicle vehicle = vehicleService.getVehicleByVin(vehiclereading.getVin());
-
-		vehicle.getReadings().add(vehiclereading);
 
 		if (vehicle.getRedlineRpm() < vehiclereading.getEngineRpm()) {
 
-			Alert alert = new Alert("HIGH", "Warning!!!!", vehiclereading.getTimestamp());
-			alert.setVin(vehiclereading.getVin());
-			vehicle.getAlerts().add(alert);
-
+			Alert alert = new Alert("HIGH", "Warning!!!!", vehiclereading.getTimestamp(), vehiclereading.getVin());
+			vehicle.addAlert(alert);
 		}
 		if (vehiclereading.getFuelVolume() < (0.1) * vehicle.getMaxFuelVolume()) {
 
-			Alert alert = new Alert("MEDIUM", "BeWare", vehiclereading.getTimestamp());
-			alert.setVin(vehiclereading.getVin());
-			vehicle.getAlerts().add(alert);
-
+			Alert alert = new Alert("MEDIUM", "BeWare", vehiclereading.getTimestamp(), vehiclereading.getVin());
+			vehicle.addAlert(alert);
 		}
 		if (vehiclereading.getTires().getBackLeft() < 32 || vehiclereading.getTires().getBackLeft() > 36
 				|| vehiclereading.getTires().getBackRight() > 36 || vehiclereading.getTires().getBackRight() < 32
 				|| vehiclereading.getTires().getFrontLeft() < 32 || vehiclereading.getTires().getFrontLeft() > 36
 				|| vehiclereading.getTires().getFrontRight() > 36 || vehiclereading.getTires().getFrontRight() < 32) {
 
-			Alert alert = new Alert("LOW", "Careful", vehiclereading.getTimestamp());
-			alert.setVin(vehiclereading.getVin());
-			vehicle.getAlerts().add(alert);
+			Alert alert = new Alert("LOW", "Careful", vehiclereading.getTimestamp(), vehiclereading.getVin());
+			vehicle.addAlert(alert);
 
 		}
 		vehicleService.addVehicle(vehicle);
@@ -94,17 +83,15 @@ public class VehicleController {
 	}
 
 	@GetMapping("/getAllVehicleDetails")
-	public List<Vehicle> getAllVehicleDetails(HttpServletRequest request, HttpServletResponse response) {
+	public List<Vehicle> getAllVehicleDetails() {
 
 		return vehicleService.getAllVehicles();
 	}
 
 	@GetMapping("/getVehicleAlerts/{vin}")
-	public List<Alert> getVehicleAlerts(@PathVariable String vin, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		Vehicle vehicle = vehicleService.getVehicleByVin(vin);
-		return vehicle.getAlerts();
+	public List<Alert> getVehicleAlerts(@PathVariable String vin) {
+		
+		return alertService.getVinAlerts(vin);
 	}
 
 	@GetMapping("/getHighAlerts")

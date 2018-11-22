@@ -1,15 +1,7 @@
-package com.Iot.Karan_Saini_IoTLab_project.Entity;
+package com.Iot.Karan_Saini_IoTLab_project.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
 public class Tires {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private int id;
 	private int frontLeft;
 	private int frontRight;

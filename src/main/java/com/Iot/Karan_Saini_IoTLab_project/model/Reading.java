@@ -1,23 +1,15 @@
-package com.Iot.Karan_Saini_IoTLab_project.Entity;
+package com.Iot.Karan_Saini_IoTLab_project.model;
 
 import java.sql.Timestamp;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-
-@Entity
+//@Entity
 public class Reading {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// @Id
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String vin;
 	private long lattitude;
 	private long longitude;
-	private Timestamp timestamp;
+	private  Timestamp timestamp;
 	private float fuelVolume;
 	private int speed;
 	private int engineHp;
@@ -26,8 +18,8 @@ public class Reading {
 	private boolean cruiseControlOn;
 	private long engineRpm;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "tires_id")
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @JoinColumn(name = "tires_id")
 	private Tires tires;
 
 	public Reading() {
@@ -165,5 +157,4 @@ public class Reading {
 				+ engineHp + ", checkEngineLightOn=" + checkEngineLightOn + ", engineCoolantLow=" + engineCoolantLow
 				+ ", cruiseControlOn=" + cruiseControlOn + ", engineRpm=" + engineRpm + ", tires=" + tires + "]";
 	}
-
 }

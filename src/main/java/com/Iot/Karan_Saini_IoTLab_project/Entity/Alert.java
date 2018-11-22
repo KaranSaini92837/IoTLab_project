@@ -22,11 +22,12 @@ public class Alert implements Comparable<Alert> {
 		super();
 	}
 
-	public Alert(String priority, String message, Timestamp timestamp) {
+	public Alert(String priority, String message, Timestamp timestamp, String vin) {
 		super();
 		this.priority = priority;
 		this.message = message;
 		this.timestamp = timestamp;
+		this.vin = vin;
 	}
 
 	public String getPriority() {
