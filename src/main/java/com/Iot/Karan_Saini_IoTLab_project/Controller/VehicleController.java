@@ -26,7 +26,6 @@ public class VehicleController {
 	@Autowired
 	private AlertService alertService;
 	
-	int i = 1;
 
 	@CrossOrigin()
 	@PutMapping("/vehicles")

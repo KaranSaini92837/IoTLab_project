@@ -1,10 +1,9 @@
 package com.Iot.Karan_Saini_IoTLab_project.model;
 
 import java.sql.Timestamp;
-//@Entity
+
 public class Reading {
-	// @Id
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private int id;
 	private String vin;
 	private long lattitude;
@@ -18,8 +17,7 @@ public class Reading {
 	private boolean cruiseControlOn;
 	private long engineRpm;
 
-	// @OneToOne(cascade = CascadeType.ALL)
-	// @JoinColumn(name = "tires_id")
+	
 	private Tires tires;
 
 	public Reading() {
